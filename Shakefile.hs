@@ -21,74 +21,54 @@ import Template ( pageHtml )
 main :: IO ()
 main = withUtf8 $ shakeArgs shakeOptions{shakeColor=True} $ do
     want [ "dest/index.html"
-         , "dest/01/ch-1.html"
-         , "dest/02/ch-2.html"
-         , "dest/03/ch-3.html"
+         , "dest/ch-1.html"
+         , "dest/ch-2.html"
+         , "dest/ch-3.html"
          ]
 
     -- To serve the generated files (useful for previewing),
     -- run `shake serve`.
     phony "serve" $
-      liftIO $ serve 8080 "dest/"
+        liftIO $ serve 8080 "dest/"
 
     "templates/template.html" %> \f -> do
+        -- Build templates/template.html from our module, Template.hs
         need ["Template.hs"]
         liftIO $ renderToFile f pageHtml
 
-    "dest/index.html" %> \f -> do
-        let source = "source/index.md"
+    "dest/*.html" %> \f -> do
+        let bib = "source/references.bib"
+            csl = "templates/modern-language-association.csl"
+            source = "source" </> dropDirectory1 ( f -<.> "md" )
             template = "templates/template.html"
-        need ([ source, template ])
-        contents <- liftIO $ readFile source
-        cmd (Stdin contents) "pandoc" ["--template", template,
-                                       "--standalone",
-                                       "--section-divs",
-                                       "--variable=autoSectionLabels:true",
-                                       "-o", f
-                                       ]
+        includes <- getDirectoryFiles "" ["source/includes/**/*", "source/images/**/*"]
+        let includesDests = map (\f -> "dest" </> dropDirectory1 f) includes
+        need $ [ source, template, bib ] ++ includesDests
+        liftIO $ print includes
+        cmd_ "pandoc" ["--template", template,
+                        "--standalone",
+                        "--section-divs",
+                        "--reference-location=block",
+                        "--csl=" ++ csl,
+                        "--toc",
+                        "--variable=autoSectionLabels:true",
+                        "--metadata=linkReferences:true",
+                        "--metadata=link-citations:true",
+                        "--metadata=tblPrefix:table",
+                        "--filter=templates/PandocSidenote.hs",
+                        "--filter=pandoc-crossref",
+                        "--citeproc",
+                        "--mathjax",
+                        "--bibliography", bib,
+                        "-o", f,
+                        source
+                      ]
 
-    let bib = "references.bib"
-        csl = "templates/modern-language-association.csl"
-        template = "templates/template.html"
-
-    ["dest//images/*", "dest//includes/*", "dest/assets/**"] |%> \f -> do
-        let source = dropDirectory1 f
+    -- Anything in /source/images and source/includes we just copy over.
+    ["dest/images/**/**", "dest/includes/**/**"] |%> \f -> do
+        let source = "source" </> dropDirectory1 f
         need [source]
         copyFileChanged source f
-
-    "dest/03/ch-3.html" %> \f -> do
-        assets <- getDirectoryFiles "" [ "03/images/*"
-                                       , "assets/*/*"
-                                       , "03/includes/*" ]
-        liftIO $ print assets
-        let outAssets = map ("dest/" <>) assets
-        let source = "03/ch-3.md"
-            filters = [ "templates/PandocSidenote.hs"
-                      , "templates/hex-filter.hs"
-                      ]
-        need ([ source, template, csl, bib ]
-              ++ outAssets
-              ++ filters)
-        contents <- readFileText source
-        cmd (Stdin replaced) "pandoc" ["--template", template,
-                                       "--standalone",
-                                       "--section-divs",
-                                       "--reference-location=block",
-                                       "--csl=" ++ csl,
-                                       "--toc",
-                                       "--variable=autoSectionLabels:true",
-                                       "--metadata=linkReferences:true",
-                                       "--metadata=link-citations:true",
-                                       "--metadata=tblPrefix:table",
-                                       "--citation-abbreviations=03-colors/abbreviations.json",
-                                       "--filter=templates/PandocSidenote.hs",
-                                       "--filter=pandoc-crossref",
-                                       "--citeproc",
-                                       "--filter=templates/hex-filter.hs",
-                                       "--mathjax",
-                                       "--bibliography", bib,
-                                       "-o", f
-                                       ]
 
 -- | WAI Settings suited for serving statically generated websites.
 staticSiteServerSettings :: FilePath -> StaticSettings
