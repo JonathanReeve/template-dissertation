@@ -4,6 +4,8 @@ A template for a modern, best-practices dissertation, which exports to HTML.
 
 For this to make sense, please [read the blog post which started this, "Best Practices for a 21st Century Dissertation"](http://jonreeve.com/2022/03/best-practices-dissertation/). 
 
+[See a live demo here](https://jonathanreeve.github.io/template-dissertation/), which is just this template, on its own, built with GitHub Actions, and published with GitHub Pages. 
+
 ## Features
 
 This is a best-practices dissertation template, which meets [the requirements of Columbia University's Graduate School of Arts and Sciences](https://gsas.columbia.edu/content/formatting-guidelines-and-dissertation-template), and probably the requirements of other schools and universities, as well. The template is: 
@@ -40,6 +42,12 @@ Its features include:
 Once it builds, commit your changes and push to your repository. Enable GitHub actions, and it'll automatically serve it to GitHub pages. 
 
 For an example, see [my own disseration](http://dissertation.jonreeve.com/) (still a work in progress).  
+
+## Deploying to the Web
+
+A GitHub Actions setup is already included, which can automatically build and deploy your dissertation. So long as your repo has Actions and Pages enabled for your repo, it will automatically deploy to <https://your-username-here.github.io/template-dissertation/>, where `your-username-here` is your GitHub username. Change `template-dissertation`, if you've changed the name of your repo. 
+
+I'd recommend setting up a custom domain. For example, my dissertation lives at [dissertaiton.jonreeve.com](https://dissertation.jonreeve.com/)
 
 ## Depositing Using Zenodo
 
@@ -79,4 +87,7 @@ Absolutely! It's all in `Template.hs`, in the section `CSS`. It's written using 
 
 You betcha! Just grab [a CSL file from here](https://github.com/citation-style-language/styles) which represents your desired style. Then change the filename to the CSL, in the Shakefile. 
 
-    
+## Similar Projects
+
+- [Quarto](https://quarto.org/)
+- [pandoc-scholar](https://github.com/pandoc-scholar/pandoc-scholar)
