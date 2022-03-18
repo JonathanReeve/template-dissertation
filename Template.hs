@@ -20,8 +20,8 @@ pageHtml = do
       title_ "$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$"
       style_ [ L.type_ "text/css" ] $ C.render css
       -- Include Tufte.css. See https://github.com/edwardtufte/tufte-css.
-      link_ [ rel_ "stylesheet", href_ "/includes/tufte-css/latex.css" ]
-      link_ [ rel_ "stylesheet", href_ "/includes/tufte-css/tufte.css" ]
+      link_ [ rel_ "stylesheet", href_ "includes/tufte-css/latex.css" ]
+      link_ [ rel_ "stylesheet", href_ "includes/tufte-css/tufte.css" ]
       -- Print-view CSS
       style_ [ L.type_ "text/css" ] ("@page { margin: 3cm; @bottom-center { content: counter(page); } }" :: Html ())
     body_ $ do

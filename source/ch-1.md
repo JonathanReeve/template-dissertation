@@ -5,7 +5,7 @@ author: Yourname Here
 
 Here is where you would put the text for Chapter 1. 
 
-# Here is Section 1
+# Here is A First-Level Header
 
 This is the way you cite something, like my blog post [@reeveDissertation2022]. 
 
@@ -23,11 +23,11 @@ note.]
 
 You can also include images, like this: 
 
-![A picture of a kitten](/images/kitten.jpg)
+![A picture of a kitten](images/kitten.jpg)
 
 Or make them figures. See [@fig:kitten] for an example of one. 
 
-![A picture of a kitten](/images/kitten2.jpg){#fig:kitten}
+![A picture of a kitten](images/kitten2.jpg){#fig:kitten}
 
 ## And Math
 
