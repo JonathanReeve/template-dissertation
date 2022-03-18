@@ -5,7 +5,7 @@ author: Yourname Here
 
 ## Copyright
 
-All material is Copyright 2022, by Youname Here, and is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/). 
+All material is Copyright 2022, by Yourname Here, and is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/). 
 
 ## Abstract
 
@@ -24,6 +24,8 @@ Manually enter a list of figures here.
 ## Acknowledgements 
 
 This dissertation would not have been possible without the generous assistance of...
+
+The formatting is accomplished using [template-dissertation](https://github.com/JonathanReeve/template-dissertation), a dissertation template by Jonathan Reeve.
 
 ## Dedication
 
