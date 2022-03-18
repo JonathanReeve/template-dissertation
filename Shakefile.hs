@@ -1,17 +1,5 @@
 -- Shakefile Stuff
 import Development.Shake
-    ( liftIO,
-      ShakeOptions(shakeColor),
-      cmd_,
-      shakeArgs,
-      copyFileChanged,
-      shakeOptions,
-      getDirectoryFiles,
-      (%>),
-      need,
-      phony,
-      want,
-      (|%>) )
 import Development.Shake.FilePath
 import Text.Regex
 import qualified Data.Text as T
